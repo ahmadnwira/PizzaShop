@@ -3,6 +3,9 @@ language: php
 php:
   - 7.2
 
+env:
+  - APP_KEY=base64:tRa62wD1uRbBrnwXpcQZw5W4f0qeFOGik1XT5eXb5O8=
+
 before_script:
   - composer self-update
   - composer install
