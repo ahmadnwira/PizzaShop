@@ -11,6 +11,6 @@ class PizzasTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Pizza::class, 100)->create();
+        factory(App\Pizza::class, 5)->create();
     }
 }

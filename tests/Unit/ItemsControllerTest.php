@@ -18,6 +18,7 @@ class ItemsControllerTest extends TestCase
 
     public function testIndexResponse()
     {
+        $this->artisan("db:seed");
         $result = $this->json('GET', self::ROUTE);
         $result
             ->assertStatus(200)

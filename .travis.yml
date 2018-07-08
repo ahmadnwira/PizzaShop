@@ -8,8 +8,9 @@ env:
 
 before_script:
   - cp .env.travis .env
-  - mysql -e 'create database test;'
+  - mysql -e 'create database pizzatest;'
   - composer self-update
   - composer install
+  - php artisan migrate --database=testing
 
-script: ./vendor/bin/phpunit  tests/
+script: ./vendor/bin/phpunit tests/

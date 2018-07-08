@@ -11,6 +11,6 @@ class ToppingsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Topping::class, 50)->create();
+        factory(App\Topping::class, 5)->create();
     }
 }

@@ -11,6 +11,6 @@ class ExtrasTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Extra::class, 50)->create();
+        factory(App\Extra::class, 5)->create();
     }
 }
