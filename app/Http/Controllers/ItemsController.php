@@ -14,7 +14,13 @@ class ItemsController extends Controller
     */
     public function index()
     {
-        return Item::all();
+        return Item::get([
+            'id',
+            'category_id',
+            'item',
+            'size',
+            'pirce'
+        ]);
     }
 
     /**

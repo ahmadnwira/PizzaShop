@@ -12,8 +12,23 @@ class ItemsControllerTest extends TestCase
 
     public function testIndexHttpStatusCode()
     {
-        $result  = $this->call('GET', self::ROUTE);
-        $statusCode = $result->getStatusCode();
-        $this->assertEquals(200, $statusCode);
+        $result = $this->call('GET', self::ROUTE);
+        $result->assertStatus(200);
+    }
+
+    public function testIndexResponse()
+    {
+        $result = $this->json('GET', self::ROUTE);
+        $result
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                [
+                    'id',
+                    'category_id',
+                    'item',
+                    'size',
+                    'pirce'
+                ]
+            ]);
     }
 }
