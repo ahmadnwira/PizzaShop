@@ -18,7 +18,8 @@ class CategoriesControllerTest extends TestCase
 
     public function testIndexResponse()
     {
-        $this->artisan("db:seed");
+        factory(\App\Category::class)->create();
+
         $result = $this->json('GET', self::BASE_ROUTE);
         $result
             ->assertOk()
@@ -32,15 +33,27 @@ class CategoriesControllerTest extends TestCase
 
     public function testShowResponse()
     {
-        $result = $this->json('get', self::BASE_ROUTE . "/1");
+        $category = factory(\App\Category::class)->create();
+
+        $result = $this->json('get', self::BASE_ROUTE ."/". $category->id);
         $result
         ->assertOk()
-        ->assertJsonCount(4);
+        ->assertJsonStructure([
+            'id',
+            'category',
+            'created_at',
+            'updated_at',
+        ]);
     }
 
     public function testItems()
     {
-        $result = $this->json('get', self::BASE_ROUTE . "/1/items");
+        $category = factory(\App\Category::class)->create();
+        factory(\App\Item::class)->create([
+            'category_id' => $category->id
+        ]);
+
+        $result = $this->json('get', self::BASE_ROUTE ."/". $category->id. "/items");
         $result
         ->assertOk()
         ->assertJsonStructure([
