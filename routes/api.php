@@ -6,6 +6,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('items', 'ItemsController', ['except' => ['create', 'edit']]);
+Route::get('categoires/{category}/items', 'CategoriesController@items');
 
-Route::resource('categoires', 'CategoriesController', ['except' => ['create', 'edit']]);
+Route::apiResources([
+    'items' => 'ItemsController',
+    'categoires' => 'CategoriesController',
+]);

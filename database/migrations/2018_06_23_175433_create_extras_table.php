@@ -17,7 +17,7 @@ class CreateExtrasTable extends Migration
             $table->increments('id');
             $table->string('name', '50');
             $table->string('size', '50');
-            $table->decimal('pirce', 4, 2);
+            $table->decimal('price', 4, 2);
             $table->timestamps();
         });
     }

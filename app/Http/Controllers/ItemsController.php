@@ -19,7 +19,7 @@ class ItemsController extends Controller
             'category_id',
             'item',
             'size',
-            'pirce'
+            'price'
         ]);
     }
 

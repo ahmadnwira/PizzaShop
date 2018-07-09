@@ -19,7 +19,7 @@ class CreatePizzaTable extends Migration
             $table->string('dough', '50');
             $table->integer('toppings_count');
             $table->string('size', '50');
-            $table->decimal('pirce', 4, 2);
+            $table->decimal('price', 4, 2);
             $table->timestamps();
         });
     }

@@ -37,4 +37,20 @@ class CategoriesControllerTest extends TestCase
         ->assertOk()
         ->assertJsonCount(4);
     }
+
+    public function testItems()
+    {
+        $result = $this->json('get', self::BASE_ROUTE . "/1/items");
+        $result
+        ->assertOk()
+        ->assertJsonStructure([
+            [
+                'id',
+                'category_id',
+                'item',
+                'size',
+                'price'
+            ]
+        ]);
+    }
 }

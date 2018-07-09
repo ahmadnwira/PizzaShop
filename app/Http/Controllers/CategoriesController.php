@@ -82,4 +82,15 @@ class CategoriesController extends Controller
     {
         //
     }
+
+    /**
+    * show the specified resource items which has 1:M.
+    *
+    * @param  int $id
+    * @return \Illuminate\Http\Response
+    */
+    public function items(Category $category)
+    {
+        return $category->items;
+    }
 }

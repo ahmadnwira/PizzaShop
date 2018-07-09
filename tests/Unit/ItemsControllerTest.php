@@ -28,7 +28,7 @@ class ItemsControllerTest extends TestCase
                     'category_id',
                     'item',
                     'size',
-                    'pirce'
+                    'price'
                 ]
             ]);
     }
