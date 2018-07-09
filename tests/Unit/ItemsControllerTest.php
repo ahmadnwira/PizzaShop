@@ -10,6 +10,13 @@ class ItemsControllerTest extends TestCase
 {
     const BASE_ROUTE="/api/items";
 
+    public function setUp()
+    {
+        parent::setUp();
+        \Artisan::call('migrate:refresh');
+        \Artisan::call('db:seed');
+    }
+
     public function testIndexHttpStatusCode()
     {
         $result = $this->call('GET', self::BASE_ROUTE);
@@ -18,7 +25,6 @@ class ItemsControllerTest extends TestCase
 
     public function testIndexResponse()
     {
-        $this->artisan("db:seed");
         $result = $this->json('GET', self::BASE_ROUTE);
         $result
             ->assertOk()
@@ -39,5 +45,11 @@ class ItemsControllerTest extends TestCase
         $result
         ->assertOk()
         ->assertJsonCount(7);
+    }
+
+    public function testDelete()
+    {
+        $result = $this->json('delete', self::BASE_ROUTE . "/1");
+        $result->assertStatus(201);
     }
 }
