@@ -21,7 +21,7 @@ class ItemsControllerTest extends TestCase
         $this->artisan("db:seed");
         $result = $this->json('GET', self::ROUTE);
         $result
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJsonStructure([
                 [
                     'id',
@@ -31,5 +31,13 @@ class ItemsControllerTest extends TestCase
                     'pirce'
                 ]
             ]);
+    }
+
+    public function testShowResponse()
+    {
+        $result = $this->json('get', "api/items/1");
+        $result
+        ->assertOk()
+        ->assertJsonCount(7);
     }
 }

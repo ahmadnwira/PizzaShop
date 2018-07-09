@@ -41,7 +41,7 @@ class ItemsController extends Controller
    */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -52,7 +52,7 @@ class ItemsController extends Controller
    */
     public function show($id)
     {
-        //
+        return Item::find($id);
     }
 
     /**
