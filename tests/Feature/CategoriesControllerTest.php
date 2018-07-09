@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ItemsControllerTest extends TestCase
+class CategoriesControllerTest extends TestCase
 {
-    const BASE_ROUTE="/api/items";
+    const BASE_ROUTE="/api/categoires";
 
     public function testIndexHttpStatusCode()
     {
@@ -25,10 +25,7 @@ class ItemsControllerTest extends TestCase
             ->assertJsonStructure([
                 [
                     'id',
-                    'category_id',
-                    'item',
-                    'size',
-                    'pirce'
+                    'category',
                 ]
             ]);
     }
@@ -38,6 +35,6 @@ class ItemsControllerTest extends TestCase
         $result = $this->json('get', self::BASE_ROUTE . "/1");
         $result
         ->assertOk()
-        ->assertJsonCount(7);
+        ->assertJsonCount(4);
     }
 }
