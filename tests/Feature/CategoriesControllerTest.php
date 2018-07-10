@@ -66,4 +66,14 @@ class CategoriesControllerTest extends TestCase
             ]
         ]);
     }
+
+    public function testDelete()
+    {
+        $category = factory(\App\Category::class)->create();
+
+        $result = $this->json('delete', self::BASE_ROUTE ."/". $category->id);
+        $result->assertStatus(201);
+
+        $this->assertTrue(\App\Item::where('category_id', $category->id)->get()->isEmpty());
+    }
 }

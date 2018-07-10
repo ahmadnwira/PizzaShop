@@ -80,7 +80,13 @@ class CategoriesController extends Controller
     */
     public function destroy($id)
     {
-        //
+        try{
+            Category::destroy($id);
+        }
+        catch (\Exception $e){
+            return response()->json([], 503);
+        }
+        return response()->json([], 201);
     }
 
     /**
