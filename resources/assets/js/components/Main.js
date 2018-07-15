@@ -9,18 +9,19 @@ export default class Main extends Component {
         this.state = {
             categoires: [],
             items:[],
+            active_category: 0
         };
 
         this.CategoryClickHandler = this.CategoryClickHandler.bind(this)
     }
 
-    CategoryClickHandler(url)
+    CategoryClickHandler(k, url)
     {
         fetch(url)
         .then(response => response.json())
         .then(
           (result) => {
-              this.setState({items: result});
+              this.setState({items: result, active_category: k});
           },
           (error) => {
               this.setState({items: []})
@@ -47,6 +48,7 @@ export default class Main extends Component {
                 <Categoires
                     categoires={this.state.categoires}
                     handleClick={this.CategoryClickHandler}
+                    active = {this.state.active_category}
                 />
                 <Items items={this.state.items} />
             </div>

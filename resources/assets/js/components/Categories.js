@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 const Categoires = (props) => {
     return (
@@ -7,16 +8,16 @@ const Categoires = (props) => {
             <ul className="list-group">
                 <li className="list-group-item text-white bg-dark">Categories</li>
                 <li
-                    className="list-group-item"
-                    onClick={()=>{props.handleClick(`api/pizza/`)}}>
+                    className={`list-group-item ${props.active === 0 ? 'active' : ''}`}
+                    onClick={()=>{props.handleClick(0, `api/pizza/`)}}>
                     pizza
                 </li>
                 {
                     props.categoires.length > 0 ?
                     props.categoires.map(category =>
-                        <li className="list-group-item"
+                        <li className={`list-group-item ${props.active === category.id ? 'active' : ''}`}
                             key={category.id}
-                            onClick={()=>{props.handleClick(`api/categoires/${category.id}/items`)}}>
+                            onClick={()=>{props.handleClick(category.id, `api/categoires/${category.id}/items`)}}>
                             {category.category}
                         </li>
                     )
