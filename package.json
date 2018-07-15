@@ -13,19 +13,23 @@
     },
     "devDependencies": {
         "axios": "^0.18",
+        "lodash": "^4.17.4",
+        "popper.js": "^1.12",
         "babel-preset-react": "^6.23.0",
         "bootstrap": "^4.0.0",
+        "enzyme": "^3.3.0",
+        "enzyme-adapter-react-16": "^1.1.1",
+        "jest": "^23.4.1",
         "cross-env": "^5.1",
         "jquery": "^3.2",
         "laravel-mix": "^2.0",
-        "lodash": "^4.17.4",
-        "popper.js": "^1.12",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
-        "react-router-dom": "^4.3.1",
-        "jest":"^23.4.1"
+        "react-router-dom": "^4.3.1"
     },
     "jest": {
-        "roots": ["<rootDir>/resources/assets/js/"]
+        "roots": [
+            "<rootDir>/resources/assets/js/"
+        ]
     }
 }

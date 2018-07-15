@@ -1,5 +1,12 @@
-let sum = (a,b) => a+b ;
+import "isomorphic-fetch";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Main from '../Main';
 
-test('sum test 1+2=3', () => {
-    expect(sum(1, 2)).toBe(3);
+const fetch = require('node-fetch');
+
+describe('<Main />', ()=>{
+    it('renders correctly.', ()=>{
+        ReactDOM.render(<Main />, document.createElement('div'));
+    });
 });
