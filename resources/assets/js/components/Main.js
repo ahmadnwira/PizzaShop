@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Categoires from './Categories';
-import Items from './Items';
+import Items from './items/Items';
 
 export default class Main extends Component {
     constructor(){
@@ -14,9 +14,9 @@ export default class Main extends Component {
         this.CategoryClickHandler = this.CategoryClickHandler.bind(this)
     }
 
-    CategoryClickHandler(key)
+    CategoryClickHandler(url)
     {
-        fetch(`api/categoires/${key}/items`)
+        fetch(url)
         .then(response => response.json())
         .then(
           (result) => {

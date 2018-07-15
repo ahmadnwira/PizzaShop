@@ -11,4 +11,5 @@ Route::get('categoires/{category}/items', 'CategoriesController@items');
 Route::apiResources([
     'items' => 'ItemsController',
     'categoires' => 'CategoriesController',
+    'pizza' => 'PizzaController'
 ]);

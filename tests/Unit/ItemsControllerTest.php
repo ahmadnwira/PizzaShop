@@ -32,7 +32,7 @@ class ItemsControllerTest extends TestCase
                 [
                     'id',
                     'category_id',
-                    'item',
+                    'name',
                     'size',
                     'price'
                 ]
@@ -52,7 +52,7 @@ class ItemsControllerTest extends TestCase
         ->assertJsonStructure([
                 'id',
                 'category_id',
-                'item',
+                'name',
                 'size',
                 'price',
                 'created_at',

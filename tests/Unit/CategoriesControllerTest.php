@@ -60,7 +60,7 @@ class CategoriesControllerTest extends TestCase
             [
                 'id',
                 'category_id',
-                'item',
+                'name',
                 'size',
                 'price'
             ]

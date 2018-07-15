@@ -17,7 +17,7 @@ class ItemsController extends Controller
         return Item::get([
             'id',
             'category_id',
-            'item',
+            'name',
             'size',
             'price'
         ]);
