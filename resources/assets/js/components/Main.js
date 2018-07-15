@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Categoires from './Categories';
+import Categoires from './categories/Categories';
 import Items from './items/Items';
 
 export default class Main extends Component {
@@ -9,19 +9,19 @@ export default class Main extends Component {
         this.state = {
             categoires: [],
             items:[],
-            active_category: 0
+            active_category:-1
         };
 
         this.CategoryClickHandler = this.CategoryClickHandler.bind(this)
     }
 
-    CategoryClickHandler(k, url)
+    CategoryClickHandler(key, url)
     {
         fetch(url)
         .then(response => response.json())
         .then(
           (result) => {
-              this.setState({items: result, active_category: k});
+              this.setState({items: result, active_category: key});
           },
           (error) => {
               this.setState({items: []})
@@ -29,7 +29,7 @@ export default class Main extends Component {
         );
     }
 
-    componentWillMount() {
+    componentDidMount() {
         fetch("api/categoires/")
           .then(response => response.json())
           .then(
@@ -40,7 +40,7 @@ export default class Main extends Component {
                 this.setState({categoires: []})
             }
           );
-      }
+    }
 
     render() {
         return (
