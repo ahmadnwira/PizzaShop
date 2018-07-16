@@ -4,10 +4,12 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CategoriesControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     const BASE_ROUTE="api/categories";
 
     public function testIndexHttpStatusCode()
@@ -82,7 +84,7 @@ class CategoriesControllerTest extends TestCase
         $response = $this->withHeaders([
             'Content-Type' => 'application/json',
             'Connection' => 'close'
-        ])->json('POST', 'api/categories', ['category' => 'new_category']);
+        ])->json('POST', self::BASE_ROUTE, ['category' => 'new_category']);
 
         $response
             ->assertStatus(201)
@@ -97,7 +99,7 @@ class CategoriesControllerTest extends TestCase
         $response = $this->withHeaders([
             'Content-Type' => 'application/json',
             'Connection' => 'close'
-        ])->json('PATCH', 'api/categories/1', ['category' => 'updated_category']);
+        ])->json('PATCH', self::BASE_ROUTE.'/1', ['category' => 'updated_category']);
 
         $response
             ->assertStatus(201)

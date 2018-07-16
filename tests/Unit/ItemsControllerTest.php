@@ -10,7 +10,7 @@ class ItemsControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
-    const BASE_ROUTE="/api/items";
+    const BASE_ROUTE = "/api/items/";
 
     public function testIndexHttpStatusCode()
     {
@@ -46,7 +46,7 @@ class ItemsControllerTest extends TestCase
             'category_id' => $category->id
         ]);
 
-        $result = $this->json('get', self::BASE_ROUTE ."/". $item->id);
+        $result = $this->json('get', self::BASE_ROUTE.$item->id);
         $result
         ->assertOk()
         ->assertJsonStructure([
@@ -68,7 +68,50 @@ class ItemsControllerTest extends TestCase
             'category_id' => $category->id
         ]);
 
-        $result = $this->json('delete', self::BASE_ROUTE ."/". $item->id);
+        $result = $this->json('delete', self::BASE_ROUTE.$item->id);
         $result->assertStatus(201);
+    }
+
+    public function testStore()
+    {
+        $response = $this->withHeaders([
+            'Content-Type' => 'application/json',
+            'Connection' => 'close'
+        ])->json('POST', self::BASE_ROUTE,
+            [
+                'name' => 'new_item',
+                'category' => 1,
+                'size' => 'small',
+                'price' => 6.22
+            ]);
+
+        $response
+            ->assertStatus(201)
+            ->assertJson([
+                "created" => true,
+            ]);
+    }
+
+    public function testUpdate()
+    {
+        $category = factory(\App\Category::class)->create();
+        $item = factory(\App\Item::class)->create([
+            'category_id' => $category->id
+        ]);
+
+        $response = $this->withHeaders([
+            'Content-Type' => 'application/json',
+            'Connection' => 'close'
+        ])->json('PATCH', self::BASE_ROUTE.$item->id,
+            [
+                'name' => 'updated_item',
+                'price'=>7
+            ]);
+
+        $response
+            ->assertStatus(201)
+            ->assertJson([
+                "updated" => true,
+            ]);
     }
 }

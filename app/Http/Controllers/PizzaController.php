@@ -35,7 +35,19 @@ class PizzaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      //   TODO: Authorization
+        try{
+            Pizza::create([
+                "name" => $request->name,
+                "dough" => $request->dough,
+                "toppings_count" => $request->toppings_count,
+                "size" => $request->size,
+                "price" => $request->price
+            ]);
+        }catch (\ErrorException $e){
+            return response()->json(["created"=>false], 503);
+        }
+        return response()->json(["created"=>true], 201);
     }
 
     /**
@@ -44,9 +56,9 @@ class PizzaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Pizza $pizza)
     {
-        //
+        return $pizza;
     }
 
     /**
@@ -67,9 +79,16 @@ class PizzaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Pizza $pizza)
     {
-        //
+        // TODO: Authorization
+        try{
+            $pizza->update($request->toArray());
+        }
+        catch (\ErrorException $e){
+            return response()->json(['updated' => false], 503);
+        }
+        return response()->json(['updated' => true], 201);
     }
 
     /**
@@ -78,8 +97,14 @@ class PizzaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pizza $pizza)
     {
-        //
+        try{
+            $pizza->delete();
+        }
+        catch (\Exception $e){
+            return response()->json([], 503);
+        }
+        return response()->json([], 201);
     }
 }

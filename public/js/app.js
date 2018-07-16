@@ -55889,7 +55889,7 @@ var Categoires = function Categoires(props) {
                     id: category.id,
                     active: props.active,
                     txt: category.category,
-                    url: 'api/categoires/' + category.id + '/items',
+                    url: 'api/categories/' + category.id + '/items',
                     handleClick: props.handleClick
                 });
             }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(

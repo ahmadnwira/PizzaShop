@@ -39,10 +39,21 @@ class ItemsController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-    public function store(Request $request)
-    {
-        dd($request);
-    }
+  public function store(Request $request)
+  {
+    //   TODO: Authorization
+      try{
+          Item::create([
+              "name" => $request->name,
+              "category_id" => $request->category,
+              "size" => $request->size,
+              "price" => $request->price
+          ]);
+      }catch (\ErrorException $e){
+          return response()->json(["created"=>false], 503);
+      }
+      return response()->json(["created"=>true], 201);
+  }
 
     /**
    * Display the specified resource.
@@ -73,9 +84,16 @@ class ItemsController extends Controller
     * @param  int $id
     * @return \Illuminate\Http\Response
     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Item $item)
     {
-        //
+        // TODO: Authorization
+        try{
+            $item->update($request->toArray());
+        }
+        catch (\ErrorException $e){
+            return response()->json(['updated' => false], 503);
+        }
+        return response()->json(['updated' => true], 201);
     }
 
     /**
