@@ -6,10 +6,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('categoires/{category}/items', 'CategoriesController@items');
+Route::get('categories/{category}/items', 'CategoriesController@items');
 
 Route::apiResources([
     'items' => 'ItemsController',
-    'categoires' => 'CategoriesController',
+    'categories' => 'CategoriesController',
     'pizza' => 'PizzaController'
 ]);

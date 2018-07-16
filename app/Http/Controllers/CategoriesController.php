@@ -35,7 +35,13 @@ class CategoriesController extends Controller
    */
     public function store(Request $request)
     {
-        //
+        // TODO: Authrization
+        try{
+            Category::create(["category" => $request->category]);
+        }catch (\ErrorException $e){
+            return response()->json(["created"=>false], 503);
+        }
+        return response()->json(["created"=>true], 201);
     }
 
     /**
@@ -44,9 +50,9 @@ class CategoriesController extends Controller
    * @param int $id
    * @return \Illuminate\Http\Response
    */
-    public function show($id)
+    public function show(Category $category)
     {
-        return Category::find($id);
+        return $category;
     }
 
     /**
@@ -64,12 +70,19 @@ class CategoriesController extends Controller
     * Update the specified resource in storage.
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  int $id
+    * @param int $id
     * @return \Illuminate\Http\Response
     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        try{
+            $category->category = $request->category;
+            $category->save();
+        }
+        catch (\ErrorException $e){
+            return response()->json(['updated' => false], 503);
+        }
+        return response()->json(['updated' => true], 201);
     }
 
     /**

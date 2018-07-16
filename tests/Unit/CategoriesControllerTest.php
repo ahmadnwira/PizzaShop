@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CategoriesControllerTest extends TestCase
 {
-    const BASE_ROUTE="/api/categoires";
+    const BASE_ROUTE="api/categories";
 
     public function testIndexHttpStatusCode()
     {
@@ -76,4 +76,35 @@ class CategoriesControllerTest extends TestCase
 
         $this->assertTrue(\App\Item::where('category_id', $category->id)->get()->isEmpty());
     }
+
+    public function testStore()
+    {
+        $response = $this->withHeaders([
+            'Content-Type' => 'application/json',
+            'Connection' => 'close'
+        ])->json('POST', 'api/categories', ['category' => 'new_category']);
+
+        $response
+            ->assertStatus(201)
+            ->assertJson([
+                "created" => true,
+            ]);
+    }
+
+
+    public function testUpdate()
+    {
+        $response = $this->withHeaders([
+            'Content-Type' => 'application/json',
+            'Connection' => 'close'
+        ])->json('PATCH', 'api/categories/1', ['category' => 'updated_category']);
+
+        $response
+            ->assertStatus(201)
+            ->assertJson([
+                "updated" => true,
+            ]);
+    }
+
+
 }

@@ -30,7 +30,7 @@ export default class Main extends Component {
     }
 
     componentDidMount() {
-        fetch("api/categoires/")
+        fetch("api/categories/")
           .then(response => response.json())
           .then(
             (result) => {

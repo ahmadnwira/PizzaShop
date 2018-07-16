@@ -1,12 +1,20 @@
 import "isomorphic-fetch";
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Main from '../Main';
+import Categories from '../categories/Categories';
+import Adapter from 'enzyme-adapter-react-16';
+import {configure, shallow} from 'enzyme';
+import Category from "../categories/Category";
 
-const fetch = require('node-fetch');
+configure({ adapter: new Adapter() });
 
-describe('<Main />', ()=>{
-    it('renders correctly.', ()=>{
-        ReactDOM.render(<Main />, document.createElement('div'));
+describe('<Categories />', ()=>{
+    const component = shallow(
+        <Categories
+            categoires={[]}
+            active={-1}
+    />);
+
+    it('should render <Category />s.', ()=>{
+        expect(component.find('Category')).toHaveLength(1);
     });
 });
