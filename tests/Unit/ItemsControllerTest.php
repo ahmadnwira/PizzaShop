@@ -74,13 +74,15 @@ class ItemsControllerTest extends TestCase
 
     public function testStore()
     {
+        $category = factory(\App\Category::class)->create();
+
         $response = $this->withHeaders([
             'Content-Type' => 'application/json',
             'Connection' => 'close'
         ])->json('POST', self::BASE_ROUTE,
             [
                 'name' => 'new_item',
-                'category' => 1,
+                'category' => $category->id,
                 'size' => 'small',
                 'price' => 6.22
             ]);

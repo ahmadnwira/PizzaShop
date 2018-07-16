@@ -10,7 +10,7 @@ class CategoriesControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
-    const BASE_ROUTE="api/categories";
+    const BASE_ROUTE="api/categories/";
 
     public function testIndexHttpStatusCode()
     {
@@ -37,7 +37,7 @@ class CategoriesControllerTest extends TestCase
     {
         $category = factory(\App\Category::class)->create();
 
-        $result = $this->json('get', self::BASE_ROUTE ."/". $category->id);
+        $result = $this->json('get', self::BASE_ROUTE.$category->id);
         $result
         ->assertOk()
         ->assertJsonStructure([
@@ -55,7 +55,7 @@ class CategoriesControllerTest extends TestCase
             'category_id' => $category->id
         ]);
 
-        $result = $this->json('get', self::BASE_ROUTE ."/". $category->id. "/items");
+        $result = $this->json('get', self::BASE_ROUTE.$category->id."/items");
         $result
         ->assertOk()
         ->assertJsonStructure([
@@ -73,7 +73,7 @@ class CategoriesControllerTest extends TestCase
     {
         $category = factory(\App\Category::class)->create();
 
-        $result = $this->json('delete', self::BASE_ROUTE ."/". $category->id);
+        $result = $this->json('delete', self::BASE_ROUTE.$category->id);
         $result->assertStatus(201);
 
         $this->assertTrue(\App\Item::where('category_id', $category->id)->get()->isEmpty());
@@ -96,10 +96,15 @@ class CategoriesControllerTest extends TestCase
 
     public function testUpdate()
     {
+        $category = factory(\App\Category::class)->create();
+
         $response = $this->withHeaders([
             'Content-Type' => 'application/json',
             'Connection' => 'close'
-        ])->json('PATCH', self::BASE_ROUTE.'/1', ['category' => 'updated_category']);
+        ])->json('PATCH', self::BASE_ROUTE.$category->id,
+            [
+                'category' => 'updated_category'
+            ]);
 
         $response
             ->assertStatus(201)
