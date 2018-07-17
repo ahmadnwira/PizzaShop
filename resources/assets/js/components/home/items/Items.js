@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ItemsList from './ItemsList';
 
 const Items = (props) => {
@@ -12,9 +11,5 @@ const Items = (props) => {
         </div>
     )
 }
-
-Items.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.object)
-};
 
 export default Items;

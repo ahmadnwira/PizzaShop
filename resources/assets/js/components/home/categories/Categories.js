@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Category from './Category';
 
-const Categoires = (props) => {
+const Categories = (props) => {
     return (
         <div className="col-md-2">
             <ul className="list-group">
@@ -15,9 +14,10 @@ const Categoires = (props) => {
                     url="api/pizza"
                     handleClick={props.handleClick}
                 />
+
                 {
-                    props.categoires.length > 0 ?
-                    props.categoires.map(category =>
+                    props.categories.length > 0 ?
+                    props.categories.map(category =>
                         <Category
                             key={category.id}
                             id={category.id}
@@ -34,9 +34,4 @@ const Categoires = (props) => {
     )
 };
 
-Categoires.propTypes = {
-    categoires: PropTypes.arrayOf(PropTypes.object),
-    active: PropTypes.number.isRequired
-};
-
-export default Categoires;
+export default Categories;

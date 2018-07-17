@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Categoires from './categories/Categories';
-import Items from './items/Items';
+import {BrowserRouter, Route} from 'react-router-dom';
+
+import Home from './home/Home';
+import Nav from './nav/Nav';
 
 export default class Main extends Component {
     constructor(){
         super();
         this.state = {
-            categoires: [],
+            categories: [],
             items:[],
-            active_category:-1
+            active_category:0
         };
 
         this.CategoryClickHandler = this.CategoryClickHandler.bind(this)
@@ -29,28 +31,42 @@ export default class Main extends Component {
         );
     }
 
-    componentDidMount() {
+    componentWillMount() {
         fetch("api/categories/")
           .then(response => response.json())
           .then(
             (result) => {
-                this.setState({categoires: result});
+                this.setState({categories: result});
             },
             (error) => {
-                this.setState({categoires: []})
+                this.setState({categories: []})
             }
           );
-    }
+
+          fetch("api/pizza")
+          .then(response => response.json())
+          .then(
+            (result) => {
+                this.setState({items: result});
+            },
+            (error) => {
+                this.setState({items: []})
+            }
+          );
+        }
+
+
 
     render() {
         return (
-            <div className="row mt-2">
-                <Categoires
-                    categoires={this.state.categoires}
+            <div className="container">
+                <Nav />
+                <Home
+                    categories={this.state.categories}
                     handleClick={this.CategoryClickHandler}
                     active = {this.state.active_category}
+                    items={this.state.items}
                 />
-                <Items items={this.state.items} />
             </div>
         );
     }
