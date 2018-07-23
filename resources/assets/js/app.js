@@ -1,3 +1,3 @@
 require('./bootstrap');
 
-require('./components/Main');
+require('./src/components/App');

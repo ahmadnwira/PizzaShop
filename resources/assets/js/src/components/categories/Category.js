@@ -5,17 +5,17 @@ const Category = (props) => {
     return (
         <li
             className={`list-group-item ${props.active === props.id ? 'active' : ''}`}
-            onClick={()=>{props.handleClick(props.id, props.url)}}>
-            {props.txt}
+            onClick={props.onClick}
+            >
+            {props.category}
         </li>
     )
 }
 
 Category.propTypes = {
-    active: PropTypes.number.isRequired,
     id: PropTypes.number.isRequired,
-    url: PropTypes.string.isRequired,
-    txt: PropTypes.string.isRequired
+    category: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired
 };
 
 export default Category;
