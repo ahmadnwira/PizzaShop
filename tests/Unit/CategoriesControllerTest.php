@@ -6,6 +6,9 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use JWTAuth;
+use App\User;
+
 class CategoriesControllerTest extends TestCase
 {
     use DatabaseTransactions;
@@ -71,9 +74,14 @@ class CategoriesControllerTest extends TestCase
 
     public function testDelete()
     {
+        $adminUser = factory(\App\User::class)->create(['is_admin'=>true]);
+        $token=JWTAuth::fromUser($adminUser);
+
         $category = factory(\App\Category::class)->create();
 
-        $result = $this->json('delete', self::BASE_ROUTE.$category->id);
+        $result = $this->json('delete', self::BASE_ROUTE.$category->id,[
+            "token"=> $token
+        ]);
         $result->assertStatus(201);
 
         $this->assertTrue(\App\Item::where('category_id', $category->id)->get()->isEmpty());
@@ -81,21 +89,29 @@ class CategoriesControllerTest extends TestCase
 
     public function testStore()
     {
+        $adminUser = factory(\App\User::class)->create(['is_admin'=>true]);
+        $token=JWTAuth::fromUser($adminUser);
+
         $response = $this->withHeaders([
             'Content-Type' => 'application/json',
             'Connection' => 'close'
-        ])->json('POST', self::BASE_ROUTE, ['category' => 'new_category']);
+        ])->json('POST', self::BASE_ROUTE,[
+                'category' => 'new_category',
+                "token" => $token
+            ]);
 
         $response
             ->assertStatus(201)
             ->assertJson([
-                "created" => true,
+                "created" => true
             ]);
     }
 
-
     public function testUpdate()
     {
+        $adminUser = factory(\App\User::class)->create(['is_admin'=>true]);
+        $token=JWTAuth::fromUser($adminUser);
+
         $category = factory(\App\Category::class)->create();
 
         $response = $this->withHeaders([
@@ -103,7 +119,8 @@ class CategoriesControllerTest extends TestCase
             'Connection' => 'close'
         ])->json('PATCH', self::BASE_ROUTE.$category->id,
             [
-                'category' => 'updated_category'
+                'category' => 'updated_category',
+                "token" => $token
             ]);
 
         $response

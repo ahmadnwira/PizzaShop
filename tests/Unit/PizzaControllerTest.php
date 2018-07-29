@@ -6,6 +6,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use JWTAuth;
+
 class PizzaControllerTest extends TestCase
 {
     use DatabaseTransactions;
@@ -59,15 +61,22 @@ class PizzaControllerTest extends TestCase
 
     public function testDelete()
     {
+        $adminUser = factory(\App\User::class)->create(['is_admin'=>true]);
+        $token=JWTAuth::fromUser($adminUser);
 
         $pizza = factory(\App\Pizza::class)->create();
 
-        $result = $this->json('delete', self::BASE_ROUTE.$pizza->id);
+        $result = $this->json('delete', self::BASE_ROUTE.$pizza->id, [
+            'token' => $token
+        ]);
         $result->assertStatus(201);
     }
 
     public function testStore()
     {
+        $adminUser = factory(\App\User::class)->create(['is_admin'=>true]);
+        $token=JWTAuth::fromUser($adminUser);
+
         $response = $this->withHeaders([
             'Content-Type' => 'application/json',
             'Connection' => 'close'
@@ -77,7 +86,8 @@ class PizzaControllerTest extends TestCase
                 "dough" => "regular",
                 "toppings_count" => 3,
                 "size" => "small",
-                "price" => 6
+                "price" => 6,
+                "token" => $token
             ]);
 
         $response
@@ -89,6 +99,9 @@ class PizzaControllerTest extends TestCase
 
     public function testUpdate()
     {
+        $adminUser = factory(\App\User::class)->create(['is_admin'=>true]);
+        $token=JWTAuth::fromUser($adminUser);
+
         $pizza = factory(\App\Pizza::class)->create();
 
         $response = $this->withHeaders([
@@ -97,7 +110,8 @@ class PizzaControllerTest extends TestCase
         ])->json('PATCH', self::BASE_ROUTE.$pizza->id,
             [
                 'name' => 'updated_pizza',
-                'price'=>7
+                'price'=>7,
+                'token' => $token
             ]);
 
         $response

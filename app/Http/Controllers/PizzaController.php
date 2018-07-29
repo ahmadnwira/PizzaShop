@@ -7,6 +7,15 @@ use App\Pizza;
 
 class PizzaController extends Controller
 {
+
+    /**
+     * Enforce middleware.
+     */
+    public function __construct()
+    {
+        $this->middleware('jwt.auth', ['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +44,6 @@ class PizzaController extends Controller
      */
     public function store(Request $request)
     {
-      //   TODO: Authorization
         try{
             Pizza::create([
                 "name" => $request->name,
@@ -81,9 +89,12 @@ class PizzaController extends Controller
      */
     public function update(Request $request, Pizza $pizza)
     {
-        // TODO: Authorization
         try{
-            $pizza->update($request->toArray());
+            // to avoid DB unknown column error
+            $toUpdate = $request->toArray();
+            unset($toUpdate['token']);
+
+            $pizza->update($toUpdate);
         }
         catch (\ErrorException $e){
             return response()->json(['updated' => false], 503);

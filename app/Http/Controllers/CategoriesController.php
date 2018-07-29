@@ -8,6 +8,14 @@ use App\Category;
 class CategoriesController extends Controller
 {
     /**
+     * Enforce middleware.
+     */
+    public function __construct()
+    {
+        $this->middleware('jwt.auth', ['except' => ['index', 'show', 'items']]);
+    }
+
+    /**
     * Display a listing of the resource.
     *
     * @return \Illuminate\Http\Response
@@ -35,7 +43,11 @@ class CategoriesController extends Controller
    */
     public function store(Request $request)
     {
-        // TODO: Authrization
+        $user = \JWTAuth::parseToken()->toUser();
+        if(!$user->is_admin){
+            return response()->json(['msg' => 'not allowed'], 403);
+        }
+
         try{
             Category::create(["category" => $request->category]);
         }catch (\ErrorException $e){

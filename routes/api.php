@@ -13,3 +13,6 @@ Route::apiResources([
     'categories' => 'CategoriesController',
     'pizza' => 'PizzaController'
 ]);
+
+Route::post('/signup', 'RegistrationController@store');
+Route::post('/login', 'SessionsController@store');

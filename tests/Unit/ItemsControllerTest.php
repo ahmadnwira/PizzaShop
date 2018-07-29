@@ -6,6 +6,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use JWTAuth;
+
 class ItemsControllerTest extends TestCase
 {
     use DatabaseTransactions;
@@ -62,18 +64,26 @@ class ItemsControllerTest extends TestCase
 
     public function testDelete()
     {
+        $adminUser = factory(\App\User::class)->create(['is_admin'=>true]);
+        $token=JWTAuth::fromUser($adminUser);
+
         $category = factory(\App\Category::class)->create();
 
         $item = factory(\App\Item::class)->create([
             'category_id' => $category->id
         ]);
 
-        $result = $this->json('delete', self::BASE_ROUTE.$item->id);
+        $result = $this->json('delete', self::BASE_ROUTE.$item->id, [
+            'token' => $token
+        ]);
         $result->assertStatus(201);
     }
 
     public function testStore()
     {
+        $adminUser = factory(\App\User::class)->create(['is_admin'=>true]);
+        $token=JWTAuth::fromUser($adminUser);
+
         $category = factory(\App\Category::class)->create();
 
         $response = $this->withHeaders([
@@ -84,7 +94,8 @@ class ItemsControllerTest extends TestCase
                 'name' => 'new_item',
                 'category' => $category->id,
                 'size' => 'small',
-                'price' => 6.22
+                'price' => 6.22,
+                'token' => $token
             ]);
 
         $response
@@ -96,6 +107,9 @@ class ItemsControllerTest extends TestCase
 
     public function testUpdate()
     {
+        $adminUser = factory(\App\User::class)->create(['is_admin'=>true]);
+        $token=JWTAuth::fromUser($adminUser);
+
         $category = factory(\App\Category::class)->create();
         $item = factory(\App\Item::class)->create([
             'category_id' => $category->id
@@ -107,13 +121,14 @@ class ItemsControllerTest extends TestCase
         ])->json('PATCH', self::BASE_ROUTE.$item->id,
             [
                 'name' => 'updated_item',
-                'price'=>7
+                'price'=>7,
+                'token' => $token
             ]);
 
         $response
             ->assertStatus(201)
             ->assertJson([
                 "updated" => true,
-            ]);
+        ]);
     }
 }
