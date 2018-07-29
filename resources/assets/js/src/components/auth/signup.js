@@ -37,7 +37,7 @@ class SignUp extends Component
         .then(response => response.json())
         .then(data => {
             if (data["msg"] !== "success"){
-                this.setState({errors: data[0]});
+                this.setState({errors: data["errors"]});
             }
             else {
                 this.setState({toLogin: true})

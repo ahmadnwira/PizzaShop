@@ -21,7 +21,7 @@ class RegistrationController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([$validator->errors()->all()], 422);
+            return response()->json(["errors"=>$validator->errors()->all()], 422);
         }
 
         try{

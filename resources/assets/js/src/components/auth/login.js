@@ -37,7 +37,7 @@ class Login extends Component
         .then(response => response.json())
         .then(data => {
         if (data["msg"] !== "success"){
-                this.setState({errors: data["errors"]});
+            this.setState({errors: data["errors"]});
         }
         else {
             this.setState({toProfile: true})
