@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Nav = (props) => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a className="navbar-brand" href="/">Home</a>
+            <NavLink to="/" className="navbar-brand">Home</NavLink>
             <button className="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -16,10 +16,10 @@ const Nav = (props) => {
                 </ul>
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <Link to="/cart" className="nav-link" href="#">cart</Link>
+                        <NavLink to="/cart" className="nav-link">cart</NavLink>
                     </li>
                     <li className="nav-item">
-                        <Link to="/login" className="nav-link">Login</Link>
+                        <NavLink to="/login" className="nav-link">Login</NavLink>
                     </li>
                 </ul>
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use JWTAuth;
 
 class CategoriesController extends Controller
 {
@@ -35,7 +36,15 @@ class CategoriesController extends Controller
    */
     public function store(Request $request)
     {
-        // TODO: Authrization
+
+        // if(! $user = JWTAuth::parseToken()->authenticate()) {
+        //     return response()->json(['msg' => 'not allowed'], 403);
+        // }
+
+        // if(!$user->is_admin){
+        //     return response()->json(['msg' => 'not allowed'], 403);
+        // }
+
         try{
             Category::create(["category" => $request->category]);
         }catch (\ErrorException $e){
