@@ -51,8 +51,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-
-<<<<<<< HEAD
         if ($exception instanceof UnauthorizedHttpException) {
             if($exception instanceof TokenExpiredException) {
                 return response()->json(["msg" => "token expired"], 404);
@@ -63,15 +61,6 @@ class Handler extends ExceptionHandler
             else if($exception instanceof JWTException) {
                 return response()->json(["msg" => "not allowed"], 403);
             }
-=======
-        if($exception instanceof TokenExpiredException) {
-            return response()->json(["msg" => "token expired"], 404);
-        }
-        else if($exception instanceof TokenInvalidException) {
-            return response()->json(["msg" => "token invalid"], 403);
-        }
-        else if($exception instanceof JWTException) {
->>>>>>> b2a9e4545da791233da6d64eaaf1a81b2eb3ff03
             return response()->json(["msg" => "not allowed"], 403);
         }
 
