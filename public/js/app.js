@@ -62465,11 +62465,19 @@ var Login = function (_Component) {
             }).then(function (response) {
                 return response.json();
             }).then(function (data) {
+<<<<<<< HEAD
                 if (data["msg"] !== "success") {
                     _this2.setState({ errors: data["errors"] });
                 } else {
                     console.log(data["token"]);
                     // this.setState({toProfile: true})
+=======
+                console.log('redirect');
+                if (data["msg"] !== "success") {
+                    _this2.setState({ errors: data["errors"] });
+                } else {
+                    _this2.setState({ toProfile: true });
+>>>>>>> b2a9e4545da791233da6d64eaaf1a81b2eb3ff03
                 }
             });
         }

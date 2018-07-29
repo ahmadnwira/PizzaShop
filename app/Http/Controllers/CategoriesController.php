@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use JWTAuth;
 
 class CategoriesController extends Controller
 {
