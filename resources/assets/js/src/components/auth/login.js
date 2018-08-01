@@ -12,7 +12,7 @@ class Login extends Component
             email:"",
             password:"",
             errors:[],
-            toProfile:false
+            toProfile:false,
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -40,7 +40,8 @@ class Login extends Component
             this.setState({errors: data["errors"]});
         }
         else {
-            this.setState({toProfile: true})
+            localStorage.setItem('token', data["token"]);
+            this.setState({toProfile: true});
         }
         });
     }

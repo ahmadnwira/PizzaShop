@@ -16,3 +16,4 @@ Route::apiResources([
 
 Route::post('/signup', 'RegistrationController@store');
 Route::post('/login', 'SessionsController@store');
+Route::post('/session/user', 'SessionsController@isAdmin');

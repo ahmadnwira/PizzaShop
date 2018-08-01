@@ -19,7 +19,11 @@ const Nav = (props) => {
                         <NavLink to="/cart" className="nav-link">cart</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to="/login" className="nav-link">Login</NavLink>
+                        {
+                            localStorage.getItem("token") === null ?
+                            <NavLink to="/login" className="nav-link">Login</NavLink>
+                            : <NavLink to="/profile" className="nav-link">profile</NavLink>
+                        }
                     </li>
                 </ul>
             </div>
