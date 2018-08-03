@@ -47,7 +47,6 @@ class Login extends Component
     }
 
     render() {
-
         if(this.state.toProfile == true) {
             return (<Redirect to="/profile" />)
         }

@@ -1,12 +1,22 @@
 import React,{Component} from 'react';
 import {Redirect} from 'react-router-dom';
 
+import STORE from '../../store';
+
+import Models from './models';
+
+import CategoryForm from '../forms/category';
+import ItemsForm from '../forms/items';
+import PizzaForm from '../forms/pizza';
+
 class Admin extends Component {
     constructor() {
         super();
         this.state = {
-            toLogin: false
+            toLogin: false,
+            form: null
         }
+        this.pickForm = this.pickForm.bind(this);
     }
 
     componentWillMount() {
@@ -31,31 +41,30 @@ class Admin extends Component {
         });
     }
 
-    render() {
-        if(this.state.toLogin === true){
-            return <Redirect to="/login" />
+    pickForm(e) {
+        switch (e.target.id) {
+            case "category":
+                this.setState({form: <CategoryForm/>});
+                break;
+            case "item":
+                this.setState({form: <ItemsForm/>});
+                break;
+            case "pizza":
+                this.setState({form: <PizzaForm/>})
+                break;
         }
+    }
+
+    render() {
+        if(this.state.toLogin === true){return <Redirect to="/login" />}
+
         return(
-            <ul className="list-group list-group-flush col-md-3">
-                <li className="list-group-item d-flex justify-content-between">
-                    categories
-                    <p>
-                        <a id="category" className="btn btn-primary text-light">create</a>
-                    </p>
-                </li>
-                <li className="list-group-item d-flex justify-content-between">
-                    items
-                    <p>
-                        <a className="btn btn-primary text-light" id="item">create</a>
-                    </p>
-                </li>
-                <li className="list-group-item d-flex justify-content-between">
-                    pizza
-                    <p>
-                        <a className="btn btn-primary text-light" id="pizza">create</a>
-                    </p>
-                </li>
-            </ul>
+            <div className="row">
+                <Models pickForm={this.pickForm}/>
+                <div className="col-md-6 offset-md-3">
+                    {this.state.form}
+                </div>
+            </div>
         );
     }
 }
