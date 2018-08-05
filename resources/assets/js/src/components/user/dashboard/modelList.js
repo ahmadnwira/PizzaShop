@@ -6,7 +6,7 @@ const ModelsList = (props) => (
             <a href="#" id='categories' onClick={props.onModelClick}>categories</a>
             <p>
                 <a className="btn btn-primary text-light"
-                    id='category'
+                    id='categories'
                     onClick={props.onCreateClick}>
                         create
                 </a>
@@ -17,7 +17,7 @@ const ModelsList = (props) => (
             <a href="#" id='items' onClick={props.onModelClick}>items</a>
             <p>
                 <a className="btn btn-primary text-light"
-                    id='item'
+                    id='items'
                     onClick={props.onCreateClick}>
                     create
                 </a>

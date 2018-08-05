@@ -17,10 +17,19 @@ const ModelControls = (props) => {
                 props.data.map((elm, i) => (
                     <li key={i} className="list-group-item d-flex justify-content-between">
                         <p>{elm.name} {elm.category}</p>
-                        <span
-                            data-url={`/api/${props.model}/${elm.id}`}
-                            className="btn btn-danger"
-                            onClick={deleteItem}>Delete</span>
+                        <p>
+                            <span
+                                data-form={props.model}
+                                data-item={elm.id}
+                                className="btn btn-warning"
+                                onClick={props.onEditClick}>Edit
+                            </span>
+                            <span
+                                data-url={`/api/${props.model}/${elm.id}`}
+                                className="btn btn-danger ml-1"
+                                onClick={deleteItem}>Delete
+                            </span>
+                        </p>
                     </li>
                 ))
             }

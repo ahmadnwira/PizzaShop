@@ -11,7 +11,6 @@ class ItemsForm extends Component {
             categories: []
         }
 
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
@@ -22,47 +21,28 @@ class ItemsForm extends Component {
     }
 
     handleInputChange(e) {
-        this.setState({[e.target.id]: e.target.value});
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        this.setState({errors: []});
-        const data = JSON.stringify({...this.state, token: localStorage.getItem('token')});
-        fetch("api/items",
-            {
-                method: "POST",
-                headers: {"Content-Type": "application/json; charset=utf-8"},
-                body: data,
-            }
-        )
-        .then(response => response.json())
-        .then(data => {
-            if (data["msg"] !== "success"){
-                this.setState({errors: data["errors"]});
-            }
-        });
+        this.setState({[e.target.name]: e.target.value});
     }
 
     render() {
         return(
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.props.handleSubmit}>
             <fieldset className="fieldset">
                 <legend>Item:</legend>
                 <div className="form-group">
                     <label htmlFor="category">Item Name</label>
                     <input type="text" className="form-control"
-                        id="name"
+                        name="name"
                         placeholder="item"
                         onChange={this.handleInputChange}
-                        value={this.props.name ? this.props.name : this.state.name}
+                        value={this.props.data ? this.props.data.name : this.state.name}
                         />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="size">Item Size</label>
                     <select
-                        className="form-control" id="size"
+                        className="form-control" name="size"
                         onChange={this.handleInputChange}
                     >
                         <option> small </option>
@@ -73,7 +53,7 @@ class ItemsForm extends Component {
                 <div className="form-group">
                     <label htmlFor="category">Item Category</label>
                     <select
-                        className="form-control" id="category"
+                        className="form-control" name="category"
                         onChange={this.handleInputChange}
                     >
                         <option> pick category </option>
@@ -88,10 +68,10 @@ class ItemsForm extends Component {
                 <div className="form-group">
                     <label htmlFor="category">Item Price</label>
                     <input type="text" className="form-control"
-                        id="price"
+                        name="price"
                         placeholder="price$"
                         onChange={this.handleInputChange}
-                        value={this.props.price ? this.props.price : this.state.price}
+                        value={this.props.data ? this.props.data.price : this.state.price}
                         />
                 </div>
                 <button type="submit" className="btn btn-primary">Save</button>

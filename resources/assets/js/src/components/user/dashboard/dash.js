@@ -13,11 +13,13 @@ class DashBoard extends Component {
         this.state = {
             form:null,
             model:null,
-            data:[]
+            data:[],
+            item:null
         }
 
         this.onCreateClick = this.onCreateClick.bind(this);
         this.onModelClick = this.onModelClick.bind(this);
+        this.onEditClick = this.onEditClick.bind(this);
     }
 
     onCreateClick(e) {
@@ -31,14 +33,27 @@ class DashBoard extends Component {
         .then(data => {this.setState({model: model, data: data, form:null});});
     }
 
+    onEditClick(e) {
+        this.setState({
+            model:null,
+            data: [],
+            form: e.target.dataset.form,
+            item: e.target.dataset.item
+        });
+    }
+
     render() {
         return (
             <div className = "row" >
                 <ModelsList onCreateClick = {this.onCreateClick} onModelClick = {this.onModelClick}/>
 
                 <div className = "col-md-6 offset-md-3" >
-                    <CreateForm formName={this.state.form} />
-                    <ModelControls data={this.state.data} model={this.state.model}/>
+                    {this.state.form? <CreateForm formName={this.state.form} item={this.state.item}/> :null}
+                    <ModelControls
+                        data={this.state.data}
+                        model={this.state.model}
+                        onEditClick={this.onEditClick}
+                    />
                 </div>
             </div>
         );
